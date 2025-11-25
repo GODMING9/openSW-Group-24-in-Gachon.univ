@@ -126,22 +126,26 @@ def handle_interval_transition():
     global interval_phase, elapsed, current_rep, last_time, timer_running
 
     if interval_phase == "PREP" and elapsed >= prep_time:
+        timer_running = False  # 단계 종료 시 일시정지
         interval_phase = "EXERCISE"
         elapsed = 0.0
         current_rep = 1
         last_time = time.time()
     elif interval_phase == "EXERCISE" and elapsed >= exercise_time:
+        timer_running = False  # 단계 종료 시 일시정지
         interval_phase = "REST"
         elapsed = 0.0
         last_time = time.time()
     elif interval_phase == "REST" and elapsed >= rest_time:
+        timer_running = False  # 단계 종료 시 일시정지
         if current_rep < reps:
             interval_phase = "EXERCISE"
             current_rep += 1
             elapsed = 0.0
             last_time = time.time()
         else:
-            timer_running = False
+            # 모든 세트 완료
+            pass
 
 def on_mouse(event, x, y, flags, param):
     """마우스 클릭 이벤트 처리"""
